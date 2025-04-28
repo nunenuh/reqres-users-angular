@@ -16,4 +16,17 @@ export interface UserResponse {
 
 export interface SingleUserResponse {
   data: User;
+}
+
+export interface CreateUserResponse {
+  id: string;
+  name: string;
+  job: string;
+  createdAt: string;
+}
+
+export interface UpdateUserResponse {
+  name: string;
+  job: string;
+  updatedAt: string;
 } 

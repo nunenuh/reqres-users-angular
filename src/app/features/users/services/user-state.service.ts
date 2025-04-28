@@ -6,34 +6,53 @@ import { User } from '../models/user.model';
   providedIn: 'root'
 })
 export class UserStateService {
-  private users: User[] = [];
-  private usersSubject = new BehaviorSubject<User[]>([]);
+  private users = new BehaviorSubject<User[]>([]);
+  users$ = this.users.asObservable();
+
+  private currentPage = new BehaviorSubject<number>(1);
+  currentPage$ = this.currentPage.asObservable();
+
+  private totalPages = new BehaviorSubject<number>(0);
+  totalPages$ = this.totalPages.asObservable();
 
   constructor() {}
 
-  getUsers(): Observable<User[]> {
-    return this.usersSubject.asObservable();
-  }
-
-  getCurrentUsers(): User[] {
-    return this.users;
+  setUsers(users: User[]) {
+    this.users.next(users);
   }
 
   addUser(user: User) {
-    // Generate a new ID (max + 1)
-    const maxId = Math.max(...this.users.map(u => u.id), 0);
-    const newUser = {
-      ...user,
-      id: maxId + 1,
-      avatar: `https://reqres.in/img/faces/${maxId + 1}-image.jpg`
-    };
-    
-    this.users = [...this.users, newUser];
-    this.usersSubject.next(this.users);
+    const currentUsers = this.users.value;
+    this.users.next([...currentUsers, user]);
   }
 
-  setInitialUsers(users: User[]) {
-    this.users = users;
-    this.usersSubject.next(this.users);
+  updateUser(updatedUser: User) {
+    const currentUsers = this.users.value;
+    const index = currentUsers.findIndex(user => user.id === updatedUser.id);
+    if (index !== -1) {
+      currentUsers[index] = { ...currentUsers[index], ...updatedUser };
+      this.users.next([...currentUsers]);
+    }
+  }
+
+  deleteUser(userId: number) {
+    const currentUsers = this.users.value;
+    this.users.next(currentUsers.filter(user => user.id !== userId));
+  }
+
+  setCurrentPage(page: number) {
+    this.currentPage.next(page);
+  }
+
+  setTotalPages(total: number) {
+    this.totalPages.next(total);
+  }
+
+  getCurrentPage(): number {
+    return this.currentPage.value;
+  }
+
+  getTotalPages(): number {
+    return this.totalPages.value;
   }
 } 
