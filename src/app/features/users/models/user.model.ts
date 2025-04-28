@@ -12,16 +12,8 @@ export interface UserResponse {
   total: number;
   total_pages: number;
   data: User[];
-  support: {
-    url: string;
-    text: string;
-  };
 }
 
 export interface SingleUserResponse {
   data: User;
-  support: {
-    url: string;
-    text: string;
-  };
 } 
