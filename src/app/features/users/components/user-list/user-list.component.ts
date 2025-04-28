@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
 
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
@@ -18,7 +19,8 @@ import { UserService } from '../../services/user.service';
     MatCardModule,
     MatButtonModule,
     MatPaginatorModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatIconModule
   ],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss'

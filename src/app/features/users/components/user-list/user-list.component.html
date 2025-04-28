@@ -1,27 +1,39 @@
 <div class="container mx-auto p-4">
-  <h1 class="text-2xl font-bold mb-6 text-gray-800">User List</h1>
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">User List</h1>
+    <button mat-raised-button color="primary" [routerLink]="['/users/add']">
+      <mat-icon class="mr-2">person_add</mat-icon>
+      Add User
+    </button>
+  </div>
   
   <div *ngIf="loading" class="flex justify-center my-12">
     <mat-spinner diameter="50"></mat-spinner>
   </div>
 
   <div *ngIf="!loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <mat-card *ngFor="let user of users" class="hover:shadow-xl transition-shadow duration-300">
-      <div class="p-4">
-        <div class="flex items-center mb-4">
-          <img [src]="user.avatar" [alt]="user.first_name" class="w-20 h-20 rounded-full object-cover mr-4">
-          <div>
-            <h2 class="text-xl font-semibold">{{ user.first_name }} {{ user.last_name }}</h2>
-            <p class="text-gray-600">{{ user.email }}</p>
+    <mat-card *ngFor="let user of users" class="bg-white">
+      <mat-card-content>
+        <div class="p-4">
+          <div class="flex items-center mb-4">
+            <img [src]="user.avatar" [alt]="user.first_name" 
+                 class="w-20 h-20 rounded-full object-cover mr-4 border-2 border-indigo-100">
+            <div>
+              <h2 class="text-xl font-semibold text-gray-800">
+                {{ user.first_name }} {{ user.last_name }}
+              </h2>
+              <p class="text-gray-600">{{ user.email }}</p>
+            </div>
+          </div>
+          
+          <div class="mt-4 flex justify-end">
+            <button mat-raised-button color="primary" (click)="viewUserDetails(user.id)">
+              <mat-icon class="mr-2">visibility</mat-icon>
+              View Details
+            </button>
           </div>
         </div>
-        
-        <div class="mt-4 flex justify-end">
-          <button mat-raised-button color="primary" (click)="viewUserDetails(user.id)">
-            View Details
-          </button>
-        </div>
-      </div>
+      </mat-card-content>
     </mat-card>
   </div>
 
@@ -31,7 +43,8 @@
       [pageSize]="pageSize"
       [pageIndex]="pageIndex"
       [hidePageSize]="true"
-      (page)="handlePageEvent($event)">
+      (page)="handlePageEvent($event)"
+      class="bg-white rounded-lg shadow-sm">
     </mat-paginator>
   </div>
 </div> 
