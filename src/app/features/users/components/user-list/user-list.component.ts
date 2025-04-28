@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
+import { UserStateService } from '../../services/user-state.service';
 
 @Component({
   selector: 'app-user-list',
@@ -32,22 +33,29 @@ export class UserListComponent implements OnInit {
   pageSize = 6;
   pageIndex = 0;
 
-  constructor(private userService: UserService, private router: Router) {
-    console.log('UserListComponent constructed');
-  }
+  constructor(
+    private userService: UserService, 
+    private userStateService: UserStateService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    console.log('UserListComponent initialized');
-    this.loadUsers();
+    // Subscribe to user state changes
+    this.userStateService.getUsers().subscribe(users => {
+      if (users.length > 0) {
+        this.handleUsersUpdate(users);
+      } else {
+        this.loadUsersFromApi();
+      }
+    });
   }
 
-  loadUsers(): void {
-    console.log('Loading users...');
+  private loadUsersFromApi(): void {
     this.loading = true;
     this.userService.getUsers(this.pageIndex + 1).subscribe({
       next: (response) => {
-        console.log('Users loaded successfully:', response);
-        this.users = response.data;
+        // Initialize state with API data
+        this.userStateService.setInitialUsers(response.data);
         this.totalUsers = response.total;
         this.pageSize = response.per_page;
         this.loading = false;
@@ -59,14 +67,21 @@ export class UserListComponent implements OnInit {
     });
   }
 
+  private handleUsersUpdate(users: User[]): void {
+    // Calculate pagination
+    const start = this.pageIndex * this.pageSize;
+    const end = start + this.pageSize;
+    this.users = users.slice(start, end);
+    this.totalUsers = users.length;
+  }
+
   handlePageEvent(event: PageEvent): void {
-    console.log('Page event:', event);
     this.pageIndex = event.pageIndex;
-    this.loadUsers();
+    const users = this.userStateService.getCurrentUsers();
+    this.handleUsersUpdate(users);
   }
 
   viewUserDetails(id: number): void {
-    console.log('Navigating to user details:', id);
     this.router.navigate(['/users', id]);
   }
 } 

@@ -10,6 +10,7 @@ import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
 import { UserService } from '../../services/user.service';
+import { UserStateService } from '../../services/user-state.service';
 
 @Component({
   selector: 'app-user-add',
@@ -97,6 +98,7 @@ export class UserAddComponent {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
+    private userStateService: UserStateService,
     private router: Router,
     private snackBar: MatSnackBar
   ) {
@@ -117,12 +119,16 @@ export class UserAddComponent {
         job: 'User'
       }).subscribe({
         next: (response) => {
-          console.log('User created:', response);
-          this.snackBar.open(
-            `User created successfully! (Note: This is a demo API - the user won't persist)`, 
-            'Close',
-            { duration: 5000 }
-          );
+          // Add the user to our local state
+          this.userStateService.addUser({
+            id: 0, // Will be set by state service
+            first_name: userData.first_name,
+            last_name: userData.last_name,
+            email: userData.email,
+            avatar: '' // Will be set by state service
+          });
+
+          this.snackBar.open('User added successfully!', 'Close', { duration: 3000 });
           this.router.navigate(['/users']);
         },
         error: (error) => {
