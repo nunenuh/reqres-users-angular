@@ -1,0 +1,36 @@
+<div class="container mx-auto p-4">
+  <button mat-button class="mb-4" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon> Back to Users
+  </button>
+
+  <div *ngIf="loading" class="flex justify-center my-12">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <div *ngIf="error" class="text-center my-12">
+    <h2 class="text-xl text-red-600 mb-4">Error loading user data</h2>
+    <button mat-raised-button color="primary" (click)="goBack()">Return to User List</button>
+  </div>
+
+  <mat-card *ngIf="user && !loading" class="max-w-2xl mx-auto">
+    <mat-card-content>
+      <div class="flex flex-col md:flex-row items-center p-6">
+        <img [src]="user.avatar" [alt]="user.first_name" class="w-32 h-32 rounded-full object-cover md:mr-8 mb-4 md:mb-0">
+        
+        <div class="flex-grow text-center md:text-left">
+          <h1 class="text-2xl font-bold mb-2">{{ user.first_name }} {{ user.last_name }}</h1>
+          <div class="grid grid-cols-1 gap-3 text-gray-700">
+            <div class="flex flex-col">
+              <span class="text-sm font-medium text-gray-500">Email</span>
+              <span>{{ user.email }}</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-sm font-medium text-gray-500">User ID</span>
+              <span>{{ user.id }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div> 
