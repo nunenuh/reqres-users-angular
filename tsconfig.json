@@ -31,7 +31,11 @@
       "@shared/*": ["src/app/shared/*"],
       "@core/*": ["src/app/core/*"],
       "@features/*": ["src/app/features/*"]
-    }
+    },
+    "typeRoots": [
+      "node_modules/@types",
+      "src/app/core/types"
+    ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
