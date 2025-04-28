@@ -1,22 +1,21 @@
-import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-header',
   standalone: true,
   imports: [
-    RouterOutlet,
     RouterLink,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule
   ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss'
 })
-export class AppComponent {
-  title = 'ReqRes Users';
-}
+export class HeaderComponent {
+  @Input() title: string = 'ReqRes Users';
+} 

@@ -4,12 +4,74 @@
 @tailwind utilities;
 
 /* Material Pre-built theme import */
-@import "@angular/material/prebuilt-themes/rose-red.css";
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
 
 /* Material Typography */
 html, body { height: 100%; }
 body { 
   margin: 0; 
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  @apply bg-gray-50; /* Example of using Tailwind with Material */
+  @apply bg-gray-50;
+}
+
+/* Custom Material Theme Overrides */
+.mat-toolbar.mat-primary {
+  @apply bg-indigo-600;
+}
+
+.mat-mdc-raised-button.mat-primary {
+  @apply bg-indigo-600 hover:bg-indigo-700;
+}
+
+.mat-mdc-card {
+  @apply shadow-md hover:shadow-lg transition-shadow duration-300;
+}
+
+.mat-mdc-paginator {
+  @apply bg-transparent;
+}
+
+// Snackbar styles
+.success-snackbar {
+  .mdc-snackbar__surface {
+    background-color: #4caf50 !important;
+    color: white !important;
+  }
+
+  .mat-simple-snackbar-action {
+    color: white !important;
+  }
+}
+
+.error-snackbar {
+  .mdc-snackbar__surface {
+    background-color: #f44336 !important;
+    color: white !important;
+  }
+
+  .mat-simple-snackbar-action {
+    color: white !important;
+  }
+}
+
+.info-snackbar {
+  .mdc-snackbar__surface {
+    background-color: #2196f3 !important;
+    color: white !important;
+  }
+
+  .mat-simple-snackbar-action {
+    color: white !important;
+  }
+}
+
+.warning-snackbar {
+  .mdc-snackbar__surface {
+    background-color: #ff9800 !important;
+    color: white !important;
+  }
+
+  .mat-simple-snackbar-action {
+    color: white !important;
+  }
 }
