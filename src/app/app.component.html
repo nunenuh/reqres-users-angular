@@ -334,3 +334,36 @@
 
 
 <router-outlet />
+
+<div class="min-h-screen p-8">
+  <!-- Example using both Material and Tailwind -->
+  <div class="max-w-4xl mx-auto">
+    <mat-card class="shadow-lg">
+      <mat-card-header>
+        <mat-card-title class="text-2xl font-bold mb-4">
+          Welcome to {{ title }}
+        </mat-card-title>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Material Button with Tailwind margin -->
+          <button mat-raised-button color="primary" class="mb-4">
+            Material Button
+          </button>
+          
+          <!-- Tailwind styled button -->
+          <button class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+            Tailwind Button
+          </button>
+        </div>
+
+        <!-- Material Form Field with Tailwind width -->
+        <mat-form-field class="w-full mt-4">
+          <mat-label>Example Input</mat-label>
+          <input matInput placeholder="Type something...">
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
