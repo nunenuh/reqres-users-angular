@@ -9,6 +9,8 @@ import { ErrorHandlerService } from './services/error-handler.service';
 import { LoadingService } from './services/loading.service';
 import { UnsavedChangesGuard } from './guards/unsaved-changes.guard';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { TelemetryService } from '../services/telemetry.service';
+import { TelemetryInterceptor } from './interceptors/telemetry.interceptor';
 
 @NgModule({
   declarations: [],
@@ -21,9 +23,15 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     ErrorHandlerService,
     LoadingService,
     UnsavedChangesGuard,
+    TelemetryService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TelemetryInterceptor,
       multi: true
     }
   ]
